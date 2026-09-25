@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoCitas Manager - Historial por Placa</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .historial-container {
+            background-color: #282c34;
+            width: 100%;
+            max-width: 850px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            border-top: 5px solid #ff6b00;
+        }
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+        .search-box input {
+            flex: 1;
+            text-transform: uppercase;
+        }
+        .search-box button {
+            width: auto;
+            padding: 12px 25px;
+            margin-top: 0;
+        }
+        .tarjeta-registro {
+            background-color: #1e222b;
+            border-left: 4px solid #ff6b00;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+        .tarjeta-registro h4 {
+            color: #ff6b00;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .fecha-registro {
+            color: #a0a5b5;
+            font-size: 13px;
+        }
+        .badge-estado {
+            background-color: #4f5666;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="historial-container">
+        <h2>🔍 Historial Clínico del Vehículo</h2>
+        <p>Digita la placa para consultar todas las reparaciones, fallas y mantenimientos registrados.</p>
+
+        <!-- Buscador -->
+        <div class="search-box">
+            <input type="text" id="inputPlaca" placeholder="Ej. ABC123" maxlength="6">
+            <button id="btnBuscar">Buscar Historial</button>
+        </div>
+
+        <!-- Contenedor donde se pintarán los resultados de MySQL -->
+        <div id="resultadosHistorial">
+            <p style="text-align: center; color: #636d83;">Ingresa una placa arriba para ver su hoja de vida técnica.</p>
+        </div>
+    </div>
+
+    <script src="historial.js"></script>
+</body>
+</html>

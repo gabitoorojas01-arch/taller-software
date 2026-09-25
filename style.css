@@ -1,0 +1,117 @@
+/* ==========================================================================
+   1. CONFIGURACIÓN GENERAL (Reset de estilos)
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #1e222b; /* Gris oscuro industrial de fondo */
+    color: #f5f5f5; /* Texto casi blanco para alto contraste */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* ==========================================================================
+   2. CONTENEDOR DEL FORMULARIO
+   ========================================================================== */
+.form-container {
+    background-color: #282c34; /* Gris un poco más claro para la tarjeta */
+    width: 100%;
+    max-width: 550px;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3); /* Sombra para darle profundidad */
+    border-top: 5px solid #ff6b00; /* Línea naranja de acento arriba */
+}
+
+h2 {
+    color: #ff6b00; /* Naranja mecánico para el título principal */
+    font-size: 24px;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+p {
+    color: #a0a5b5; /* Gris suave para el subtítulo */
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 25px;
+    line-height: 1.4;
+}
+
+/* ==========================================================================
+   3. CAMPOS DE ENTRADA (Inputs, Select y Textarea)
+   ========================================================================== */
+.form-group {
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #e2e4e9;
+}
+
+input, select, textarea {
+    background-color: #1e222b;
+    color: #ffffff;
+    border: 1px solid #4f5666;
+    padding: 12px 14px;
+    font-size: 15px;
+    border-radius: 6px;
+    outline: none;
+    transition: all 0.3s ease; /* Suaviza el cambio de color al hacer clic */
+}
+
+/* Marcador de posición (placeholder) en gris */
+input::placeholder, textarea::placeholder {
+    color: #636d83;
+}
+
+/* Efecto cuando el usuario hace clic o se para en un campo */
+input:focus, select:focus, textarea:focus {
+    border-color: #ff6b00;
+    box-shadow: 0 0 8px rgba(255, 107, 0, 0.2);
+}
+
+/* Estilo específico para el área de texto */
+textarea {
+    resize: vertical; /* Permite estirar abajo pero no a los lados */
+}
+
+/* ==========================================================================
+   4. BOTÓN DE ENVÍO ACCIÓN
+   ========================================================================== */
+button {
+    background-color: #ff6b00;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    padding: 14px;
+    width: 100%;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    margin-top: 10px;
+}
+
+/* Efecto al pasar el mouse por encima del botón */
+button:hover {
+    background-color: #e05e00;
+}
+
+/* Efecto al hacer clic físico en el botón */
+button:active {
+    transform: scale(0.98);
+}

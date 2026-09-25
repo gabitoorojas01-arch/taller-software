@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoCitas Manager - Acceso Administrativo</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .login-container {
+            background-color: #282c34;
+            width: 100%;
+            max-width: 400px;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            border-top: 5px solid #ff6b00;
+        }
+        .error-message {
+            background-color: rgba(255, 68, 68, 0.1);
+            color: #ff4444;
+            padding: 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            text-align: center;
+            margin-bottom: 15px;
+            border: 1px solid rgba(255, 68, 68, 0.2);
+            display: none; /* Se muestra solo si los datos están mal */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <h2 style="margin-bottom: 5px;">🔐 Ingreso al Sistema</h2>
+        <p style="margin-bottom: 20px;">Área exclusiva para el personal administrativo y técnicos del taller.</p>
+
+        <!-- Mensaje de error dinámico -->
+        <div id="mensajeError" class="error-message">Usuario o contraseña incorrectos.</div>
+
+        <form id="formLogin">
+            <div class="form-group">
+                <label for="usuario">Usuario Administrativo:</label>
+                <input type="text" id="usuario" placeholder="Ingresa tu usuario" required>
+            </div>
+
+            <div class="form-group">
+                <label for="contrasena">Contraseña de Seguridad:</label>
+                <input type="password" id="contrasena" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" id="btnIngresar">Iniciar Sesión</button>
+        </form>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+</html>

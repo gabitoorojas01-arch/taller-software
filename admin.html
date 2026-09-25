@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoCitas Manager - Panel Administrador</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Ajuste para que la tarjeta sea más ancha en la pantalla de administración */
+        .admin-container {
+            background-color: #282c34;
+            width: 100%;
+            max-width: 950px;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            border-top: 5px solid #ff6b00;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #1e222b;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #4f5666;
+            font-size: 14px;
+        }
+        th {
+            background-color: #ff6b00;
+            color: white;
+            font-weight: bold;
+        }
+        tr:hover {
+            background-color: #2a303c;
+        }
+        .badge {
+            background-color: #d97706;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="admin-container">
+        <h2>🛠️ Panel de Control - Citas de Mantenimiento</h2>
+        <button id="btnCerrarSesion" style="width: auto; padding: 8px 15px; background-color: #ff4444; margin-bottom: 15px; float: right;">Cerrar Sesión 🔓</button>
+
+        <p>Listado general de vehículos agendados para revisión en el taller.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID Cita</th>
+                    <th>Cliente</th>
+                    <th>Placa</th>
+                    <th>Tipo</th>
+                    <th>Fecha Turno</th>
+                    <th>Motivo Técnico</th>
+                    <th>Estado</th>
+                    <th>acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tablaCitas">
+                <!-- JavaScript inyectará las filas de MySQL aquí de forma dinámica -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Conectamos la lógica del administrador -->
+    <script src="admin.js"></script>
+</body>
+</html>

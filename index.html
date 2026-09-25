@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoCitas Manager - Agendamiento</title>
+    <!-- Conectamos el archivo de estilos CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="form-container">
+        <h2>🔧 Agendar Cita de Mantenimiento</h2>
+        <p>Registra los datos de tu vehículo para reservar un turno en nuestro taller.</p>
+
+        <form id="formCita">
+            <!-- Sección: Datos del Cliente -->
+            <div class="form-group">
+                <label for="nombre">Nombre Completo:</label>
+                <input type="text" id="nombre" placeholder="Ej. Juan Pérez" required>
+            </div>
+
+            <!-- Sección: Datos del Vehículo -->
+            <div class="form-group">
+                <label for="placa">Placa del Vehículo:</label>
+                <input type="text" id="placa" placeholder="Ej. ABC123" required>
+            </div>
+
+            <div class="form-group">
+                <label for="tipoVehiculo">Tipo de Vehículo:</label>
+                <select id="tipoVehiculo" required>
+                    <option value="">Seleccione una opción...</option>
+                    <option value="carro">Automóvil / Carro</option>
+                    <option value="moto">Motocicleta</option>
+                </select>
+            </div>
+
+            <!-- Sección: Detalles de la Cita -->
+            <div class="form-group">
+                <label for="fecha">Fecha Sugerida:</label>
+                <input type="date" id="fecha" required>
+            </div>
+
+            <div class="form-group">
+                <label for="motivo">Motivo de la Cita / Falla técnica:</label>
+                <textarea id="motivo" rows="4" placeholder="Describe brevemente el problema de tu vehículo..." required></textarea>
+            </div>
+
+            <!-- Botón de Envío -->
+            <button type="submit" id="btnEnviar">Reservar Turno</button>
+        </form>
+    </div>
+
+    <!-- Conectamos la lógica de JavaScript -->
+    <script src="app.js"></script>
+</body>
+</html>
