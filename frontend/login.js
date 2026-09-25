@@ -19,7 +19,7 @@ document.getElementById("formLogin").addEventListener("submit", function(event) 
         alert("🔑 Acceso autorizado. Bienvenido al panel de control.");
         
         // Redireccionamos automáticamente al Panel del Administrador
-        window.location.href = "admin.html";
+        window.location.href = "http://localhost:3000/admin.html";
     } else {
         // Si los datos están mal, mostramos el recuadro rojo de alerta
         alertaError.style.display = "block";
