@@ -97,6 +97,37 @@ app.get('/api/historial/:placa', function(req, res) {
         res.status(200).json(resultados);
     });
 });
+// 5. ENDPOINT (GET): OBTENER LISTA DE MECÁNICOS (Para llenar los selectores)
+app.get('/api/mecanicos', function(req, res) {
+    const query = "SELECT * FROM mecanicos WHERE estado = 'Activo' ORDER BY nombre ASC";
+
+    db.query(query, function(error, resultados) {
+        if (error) {
+            console.log("Error al consultar mecánicos en MySQL:", error);
+            return res.status(500).json({ success: false, mensaje: "Error en la base de datos" });
+        }
+        
+        // Devolvemos el arreglo de mecánicos al frontend
+        res.status(200).json(resultados);
+    });
+});
+
+// 6. ENDPOINT (POST): ASIGNAR MECÁNICO A UNA CITA
+app.post('/api/citas/asignar-mecanico', function(req, res) {
+    const datos = req.body; // Recibe { idCita: X, idMecanico: Y }
+    
+    const query = "UPDATE citas SET mecanico_id = ? WHERE id = ?";
+    
+    db.query(query, [datos.idMecanico, datos.idCita], function(error, resultado) {
+        if (error) {
+            console.log("Error al asignar mecánico en MySQL:", error);
+            return res.status(500).json({ success: false, mensaje: "Error en la base de datos" });
+        }
+        
+        console.log(`💾 Mecánico ID ${datos.idMecanico} asignado a la cita ${datos.idCita}`);
+        res.status(200).json({ success: true, mensaje: "Mecánico asignado correctamente" });
+    });
+});
 
 app.listen(3000, function () {
   console.log("Servidor activo en el puerto 3000");
