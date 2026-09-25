@@ -115,3 +115,30 @@ button:hover {
 button:active {
     transform: scale(0.98);
 }
+/* Colores dinámicos para los estados de las citas */
+.badge {
+    background-color: #d97706 !important; /* Naranja para Pendiente */
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.badge-proceso {
+    background-color: #3b82f6 !important; /* Azul para En Reparación */
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.badge-finalizado {
+    background-color: #10b981 !important; /* Verde para Finalizado */
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: bold;
+}
