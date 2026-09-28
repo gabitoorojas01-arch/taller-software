@@ -170,6 +170,22 @@ app.get('/api/citas/estadisticas', function(req, res) {
         });
     });
 });
+// 9. ENDPOINT (POST): REGISTRAR NUEVO MECÁNICO EN MYSQL
+app.post('/api/mecanicos/registrar', function(req, res) {
+    const datos = req.body; // Recibe { nombre: X, especialidad: Y }
+    
+    const query = "INSERT INTO mecanicos (nombre, especialidad) VALUES (?, ?)";
+    
+    db.query(query, [datos.nombre, datos.especialidad], function(error, resultado) {
+        if (error) {
+            console.log("Error al registrar mecánico en MySQL:", error);
+            return res.status(500).json({ success: false, mensaje: "Error en la base de datos" });
+        }
+        
+        console.log(`💾 Nuevo mecánico registrado con éxito: ${datos.nombre}`);
+        res.status(200).json({ success: true, mensaje: "Mecánico registrado correctamente" });
+    });
+});
 
 app.listen(3000, function () {
   console.log("Servidor activo en el puerto 3000");
