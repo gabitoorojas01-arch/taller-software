@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Al cargar la página, configuramos el botón de salir e iniciamos la carga de datos
     configurarBotonSalir();
     cargarCitasYFuncionamiento();
+    actualizarDashboardEstadisticas(); // Carga los números grandes al iniciar
 });
 
 function configurarBotonSalir() {
@@ -53,7 +54,7 @@ function cargarCitasYFuncionamiento() {
                         let opcionesMecanicos = `<option value="">Sin Asignar...</option>`;
                         listaMecanicos.forEach(meco => {
                             const seleccionado = cita.mecanico_id === meco.id ? 'selected' : '';
-                            opcionesMecanicos += `<option value="${meco.id}" ${seleccionShort(seleccionado)}>${meco.nombre}</option>`;
+                            opcionesMecanicos += `<option value="${meco.id}" ${seleccionado}>${meco.nombre}</option>`;
                         });
 
                         fila.innerHTML = `
@@ -70,25 +71,16 @@ function cargarCitasYFuncionamiento() {
                                 </select>
                             </td>
                             <td>
-                            <!-- Selector de Cambio de Estado -->
-                            <select onchange="cambiarEstadoCita(${cita.id}, this.value)" style="padding: 5px; border-radius: 4px; background: #1e222b; color: white; border: 1px solid #4f5666; margin-right: 5px;">
-                            <option value="">Cambiar...</option>
-                            <option value="Pendiente" ${cita.estado === 'Pendiente' ? 'disabled' : ''}>Pendiente</option>
-                            <option value="En Reparación" ${cita.estado === 'En Reparación' ? 'disabled' : ''}>En Reparación</option>
-                            <option value="Finalizado" ${cita.estado === 'Finalizado' ? 'disabled' : ''}>Finalizado</option>
-                            </select>
-
-                            <!-- BOTÓN DE ELIMINAR CITA -->
-                            <button onclick="eliminarCitaDelTaller(${cita.id})" style="width: auto; padding: 6px 10px; background-color: #ff4444; border: none; border-radius: 4px; color: white; cursor: pointer; font-weight: bold;">🗑️</button>
-                            </td>
-
-                            <td>
-                                <select onchange="cambiarEstadoCita(${cita.id}, this.value)" style="padding: 5px; border-radius: 4px; background: #1e222b; color: white; border: 1px solid #4f5666;">
+                                <!-- Selector de Cambio de Estado -->
+                                <select onchange="cambiarEstadoCita(${cita.id}, this.value)" style="padding: 5px; border-radius: 4px; background: #1e222b; color: white; border: 1px solid #4f5666; margin-right: 5px;">
                                     <option value="">Cambiar...</option>
                                     <option value="Pendiente" ${cita.estado === 'Pendiente' ? 'disabled' : ''}>Pendiente</option>
                                     <option value="En Reparación" ${cita.estado === 'En Reparación' ? 'disabled' : ''}>En Reparación</option>
                                     <option value="Finalizado" ${cita.estado === 'Finalizado' ? 'disabled' : ''}>Finalizado</option>
                                 </select>
+
+                                <!-- BOTÓN DE ELIMINAR CITA -->
+                                <button onclick="eliminarCitaDelTaller(${cita.id})" style="width: auto; padding: 6px 10px; background-color: #ff4444; border: none; border-radius: 4px; color: white; cursor: pointer; font-weight: bold;">🗑️</button>
                             </td>
                         `;
                         tabla.appendChild(fila);
@@ -101,12 +93,19 @@ function cargarCitasYFuncionamiento() {
         });
 }
 
-// Función auxiliar para simplificar la inyección de texto html
-function seleccionShort(condicion) {
-    return condicion ? 'selected' : '';
+// FUNCIÓN PARA TRAER LOS NÚMEROS DEL DASHBOARD EN TIEMPO REAL
+function actualizarDashboardEstadisticas() {
+    fetch('/api/citas/estadisticas')
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("cntTotal").innerText = data.total;
+            document.getElementById("cntProceso").innerText = data.proceso;
+            document.getElementById("cntFinalizado").innerText = data.finalizado;
+        })
+        .catch(err => console.error("Error al cargar estadísticas:", err));
 }
 
-// FUNCIÓN PARA GUARDAR LA ASIGNACIÓN DE TÉCNICOS EN MYSQL (Ruta Relativa)
+// FUNCIÓN PARA GUARDAR LA ASIGNACIÓN DE TÉCNICOS EN MYSQL
 function asignarMecanicoACita(idCita, idMecanico) {
     if (!idMecanico) return;
 
@@ -120,12 +119,13 @@ function asignarMecanicoACita(idCita, idMecanico) {
         if (data.success) {
             alert("👨‍🔧 Técnico asignado correctamente al vehículo.");
             cargarCitasYFuncionamiento(); 
+            actualizarDashboardEstadisticas(); // Refresca los contadores en vivo
         }
     })
     .catch(err => console.error("Error al asignar técnico:", err));
 }
 
-// FUNCIÓN PARA CAMBIAR EL ESTADO DE LA CITA EN MYSQL (Ruta Relativa)
+// FUNCIÓN PARA CAMBIAR EL ESTADO DE LA CITA EN MYSQL
 function cambiarEstadoCita(idCita, nuevoEstado) {
     if (!nuevoEstado) return;
 
@@ -139,19 +139,20 @@ function cambiarEstadoCita(idCita, nuevoEstado) {
         if (data.success) {
             alert(`✅ Estado actualizado con éxito a: ${nuevoEstado}`);
             cargarCitasYFuncionamiento(); 
+            actualizarDashboardEstadisticas(); // Refresca los contadores en vivo
         }
     })
     .catch(error => console.error("Error al actualizar el estado:", error));
 }
+
 // FUNCIÓN PARA ELIMINAR UNA CITA DE LA BASE DE DATOS
 function eliminarCitaDelTaller(idCita) {
-    // Pedimos confirmación al usuario para evitar accidentes
     if (!confirm("⚠️ ¿Estás seguro de que deseas cancelar y eliminar permanentemente esta cita del sistema?")) {
         return; 
     }
 
     fetch('/api/citas/eliminar', {
-        method: 'POST', // Usamos POST para máxima compatibilidad local
+        method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: idCita })
     })
@@ -159,7 +160,8 @@ function eliminarCitaDelTaller(idCita) {
     .then(data => {
         if (data.success) {
             alert("🗑️ Cita eliminada correctamente del sistema.");
-            cargarCitasYFuncionamiento(); // Recargamos la tabla automáticamente
+            cargarCitasYFuncionamiento(); 
+            actualizarDashboardEstadisticas(); // Refresca los contadores en vivo
         }
     })
     .catch(err => {

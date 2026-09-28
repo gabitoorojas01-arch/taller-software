@@ -56,6 +56,25 @@
             <a href="admin.html" style="color: #ff6b00; text-decoration: none; font-weight: bold; font-size: 16px;">📋 Panel de Citas</a>
             <a href="historial.html" style="color: #ffffff; text-decoration: none; font-weight: bold; font-size: 16px;">🔍 Historial por Placa</a>
         </nav>
+                <!-- CONTENEDOR DEL DASHBOARD DE ESTADÍSTICAS -->
+        <div style="display: flex; gap: 20px; margin-bottom: 30px; flex-wrap: wrap;">
+            <!-- Tarjeta Total -->
+            <div style="flex: 1; min-width: 180px; background: #1e222b; padding: 20px; border-radius: 8px; border-left: 5px solid #ff6b00; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                <h3 style="margin: 0; font-size: 14px; color: #a0a5b5; text-transform: uppercase;">Total Órdenes</h3>
+                <p id="cntTotal" style="margin: 10px 0 0 0; font-size: 28px; font-weight: bold; color: #ffffff;">0</p>
+            </div>
+            <!-- Tarjeta En Reparación -->
+            <div style="flex: 1; min-width: 180px; background: #1e222b; padding: 20px; border-radius: 8px; border-left: 5px solid #3b82f6; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                <h3 style="margin: 0; font-size: 14px; color: #a0a5b5; text-transform: uppercase;">En Reparación</h3>
+                <p id="cntProceso" style="margin: 10px 0 0 0; font-size: 28px; font-weight: bold; color: #3b82f6;">0</p>
+            </div>
+            <!-- Tarjeta Finalizado -->
+            <div style="flex: 1; min-width: 180px; background: #1e222b; padding: 20px; border-radius: 8px; border-left: 5px solid #10b981; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+                <h3 style="margin: 0; font-size: 14px; color: #a0a5b5; text-transform: uppercase;">Listos para Entrega</h3>
+                <p id="cntFinalizado" style="margin: 10px 0 0 0; font-size: 28px; font-weight: bold; color: #10b981;">0</p>
+            </div>
+        </div>
+
         <h2>🛠️ Panel de Control - Citas de Mantenimiento</h2>
         <button id="btnCerrarSesion" style="width: auto; padding: 8px 15px; background-color: #ff4444; margin-bottom: 15px; float: right;">Cerrar Sesión 🔓</button>
 

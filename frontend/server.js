@@ -145,6 +145,31 @@ app.post('/api/citas/eliminar', function(req, res) {
         res.status(200).json({ success: true, mensaje: "Cita eliminada" });
     });
 });
+// 8. ENDPOINT (GET): OBTENER ESTADÍSTICAS DEL TALLER (COUNT)
+app.get('/api/citas/estadisticas', function(req, res) {
+    // Consulta SQL avanzada para contar los estados de un solo golpe
+    const query = `
+        SELECT 
+            COUNT(*) as total,
+            SUM(CASE WHEN estado = 'En Reparación' THEN 1 ELSE 0 END) as proceso,
+            SUM(CASE WHEN estado = 'Finalizado' THEN 1 ELSE 0 END) as finalizado
+        FROM citas
+    `;
+
+    db.query(query, function(error, resultados) {
+        if (error) {
+            console.log("Error al calcular estadísticas en MySQL:", error);
+            return res.status(500).json({ success: false, mensaje: "Error en la base de datos" });
+        }
+        
+        // Enviamos los números consolidados al frontend
+        res.status(200).json({
+            total: resultados[0].total || 0,
+            proceso: resultados[0].proceso || 0,
+            finalizado: resultados[0].finalizado || 0
+        });
+    });
+});
 
 app.listen(3000, function () {
   console.log("Servidor activo en el puerto 3000");
