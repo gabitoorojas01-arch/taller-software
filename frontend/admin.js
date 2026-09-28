@@ -70,6 +70,19 @@ function cargarCitasYFuncionamiento() {
                                 </select>
                             </td>
                             <td>
+                            <!-- Selector de Cambio de Estado -->
+                            <select onchange="cambiarEstadoCita(${cita.id}, this.value)" style="padding: 5px; border-radius: 4px; background: #1e222b; color: white; border: 1px solid #4f5666; margin-right: 5px;">
+                            <option value="">Cambiar...</option>
+                            <option value="Pendiente" ${cita.estado === 'Pendiente' ? 'disabled' : ''}>Pendiente</option>
+                            <option value="En Reparación" ${cita.estado === 'En Reparación' ? 'disabled' : ''}>En Reparación</option>
+                            <option value="Finalizado" ${cita.estado === 'Finalizado' ? 'disabled' : ''}>Finalizado</option>
+                            </select>
+
+                            <!-- BOTÓN DE ELIMINAR CITA -->
+                            <button onclick="eliminarCitaDelTaller(${cita.id})" style="width: auto; padding: 6px 10px; background-color: #ff4444; border: none; border-radius: 4px; color: white; cursor: pointer; font-weight: bold;">🗑️</button>
+                            </td>
+
+                            <td>
                                 <select onchange="cambiarEstadoCita(${cita.id}, this.value)" style="padding: 5px; border-radius: 4px; background: #1e222b; color: white; border: 1px solid #4f5666;">
                                     <option value="">Cambiar...</option>
                                     <option value="Pendiente" ${cita.estado === 'Pendiente' ? 'disabled' : ''}>Pendiente</option>
@@ -129,4 +142,28 @@ function cambiarEstadoCita(idCita, nuevoEstado) {
         }
     })
     .catch(error => console.error("Error al actualizar el estado:", error));
+}
+// FUNCIÓN PARA ELIMINAR UNA CITA DE LA BASE DE DATOS
+function eliminarCitaDelTaller(idCita) {
+    // Pedimos confirmación al usuario para evitar accidentes
+    if (!confirm("⚠️ ¿Estás seguro de que deseas cancelar y eliminar permanentemente esta cita del sistema?")) {
+        return; 
+    }
+
+    fetch('/api/citas/eliminar', {
+        method: 'POST', // Usamos POST para máxima compatibilidad local
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: idCita })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            alert("🗑️ Cita eliminada correctamente del sistema.");
+            cargarCitasYFuncionamiento(); // Recargamos la tabla automáticamente
+        }
+    })
+    .catch(err => {
+        console.error("Error al eliminar la cita:", err);
+        alert("❌ No se pudo eliminar la cita.");
+    });
 }

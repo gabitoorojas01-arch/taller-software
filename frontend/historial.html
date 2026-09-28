@@ -54,6 +54,16 @@
             font-size: 11px;
             text-transform: uppercase;
         }
+
+        /* REGLAS ESPECIALES PARA CUANDO SE IMPRIMA EN PAPEL */
+        @media print {
+            body { background: white !important; color: black !important; }
+            nav, .search-box, #btnImprimir { display: none !important; } 
+            .historial-container { box-shadow: none !important; border: none !important; background: white !important; max-width: 100% !important; padding: 0 !important; }
+            .tarjeta-registro { background: #f3f4f6 !important; border-left: 4px solid #ff6b00 !important; color: black !important; page-break-inside: avoid; }
+            .tarjeta-registro p { color: black !important; }
+            .tarjeta-registro p strong { color: #ff6b00 !important; }
+        }
     </style>
 </head>
 <body>
@@ -64,14 +74,18 @@
             <a href="admin.html" style="color: #ffffff; text-decoration: none; font-weight: bold; font-size: 16px;">📋 Panel de Citas</a>
             <a href="historial.html" style="color: #ff6b00; text-decoration: none; font-weight: bold; font-size: 16px;">🔍 Historial por Placa</a>
         </nav>
+
         <h2>🔍 Historial Clínico del Vehículo</h2>
         <p>Digita la placa para consultar todas las reparaciones, fallas y mantenimientos registrados.</p>
 
         <!-- Buscador -->
         <div class="search-box">
-            <input type="text" id="inputPlaca" placeholder="Ej. ABC123" maxlength="6">
+            <input type="text" id="inputPlaca" placeholder="Ej. ABC123" maxlength="10">
             <button id="btnBuscar">Buscar Historial</button>
         </div>
+
+        <!-- Botón de Impresión de Reporte (Se enciende con JS) -->
+        <button id="btnImprimir" style="display: none; width: auto; background-color: #3b82f6; margin-bottom: 20px; padding: 10px 20px; font-weight: bold; border: none; border-radius: 4px; color: white; cursor: pointer;">🖨️ Imprimir Reporte Técnico</button>
 
         <!-- Contenedor donde se pintarán los resultados de MySQL -->
         <div id="resultadosHistorial">

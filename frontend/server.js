@@ -129,6 +129,22 @@ app.post('/api/citas/asignar-mecanico', function(req, res) {
         res.status(200).json({ success: true, mensaje: "Mecánico asignado correctamente" });
     });
 });
+// 7. ENDPOINT (POST): ELIMINAR UNA CITA EN LA BASE DE DATOS
+app.post('/api/citas/eliminar', function(req, res) {
+    const datos = req.body; // Recibe { id: X }
+    
+    const query = "DELETE FROM citas WHERE id = ?";
+    
+    db.query(query, [datos.id], function(error, resultado) {
+        if (error) {
+            console.log("Error al eliminar la cita en MySQL:", error);
+            return res.status(500).json({ success: false, mensaje: "Error en la base de datos" });
+        }
+        
+        console.log(`🗑️ Cita ID ${datos.id} eliminada permanentemente de MySQL`);
+        res.status(200).json({ success: true, mensaje: "Cita eliminada" });
+    });
+});
 
 app.listen(3000, function () {
   console.log("Servidor activo en el puerto 3000");

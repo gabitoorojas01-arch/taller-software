@@ -1,3 +1,9 @@
+// ESCUDO DE SEGURIDAD: Bloquea el acceso si el usuario no se ha autenticado
+if (localStorage.getItem("sesionActiva") !== "true") {
+    alert("⛔ Acceso denegado. Por favor, inicia sesión primero.");
+    window.location.href = "login.html";
+}
+
 document.getElementById("btnBuscar").addEventListener("click", function() {
     buscarHistorialPorPlaca();
 });
@@ -15,19 +21,21 @@ function buscarHistorialPorPlaca() {
 
     if (placa.length === 0) {
         alert("⚠️ Por favor, ingresa una placa para realizar la consulta.");
+        controlarBotonImpresion(false); 
         return;
     }
 
     contenedor.innerHTML = "<p style='text-align:center; color:#ff6b00;'>🔍 Buscando registros en la base de datos...</p>";
 
-    // Hacemos la consulta dinámica enviando la placa en la URL
-    fetch(`http://localhost:3000/api/historial/${placa}`)
+    // Hacemos la consulta dinámica enviando la placa en la URL (Ruta Relativa)
+    fetch(`/api/historial/${placa}`)
         .then(respuesta => respuesta.json())
         .then(registros => {
             contenedor.innerHTML = ""; // Limpiamos el mensaje de carga
 
             if (registros.length === 0) {
                 contenedor.innerHTML = `<p style='text-align:center; color:#ff4444;'>❌ No se encontraron registros de mantenimiento para la placa <strong>${placa}</strong>.</p>`;
+                controlarBotonImpresion(false); // Oculta el botón azul si la placa no existe en MySQL
                 return;
             }
 
@@ -49,9 +57,25 @@ function buscarHistorialPorPlaca() {
                 `;
                 contenedor.appendChild(tarjeta);
             });
+
+            controlarBotonImpresion(true); // Muestra el botón azul si todo cargó con éxito
         })
         .catch(error => {
             console.error("Error al consultar el historial:", error);
             contenedor.innerHTML = "<p style='text-align:center; color:#ff4444;'>❌ Error al conectar con el servidor backend.</p>";
+            controlarBotonImpresion(false); // Oculta el botón si falla la red
         });
+}
+
+// CONFIGURACIÓN DEL BOTÓN DE IMPRESIÓN
+document.getElementById("btnImprimir").addEventListener("click", function() {
+    window.print(); // Abre el asistente de impresión nativo de Windows/Chrome
+});
+
+// Función interna para controlar cuándo se muestra el botón
+function controlarBotonImpresion(mostrar) {
+    const btn = document.getElementById("btnImprimir");
+    if (btn) {
+        btn.style.display = mostrar ? "inline-block" : "none";
+    }
 }
